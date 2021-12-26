@@ -1,4 +1,5 @@
 const btn = document.querySelector("button");
+let results = [];
 
 btn.addEventListener('click', async () => {
     const result = document.querySelector('.result');
@@ -28,10 +29,12 @@ btn.addEventListener('click', async () => {
 });
 
 async function getRandomTitle() {
-    const fetchRes = await fetch("https://imdb-api.com/API/AdvancedSearch/k_7k9vt2d6?title_type=tv_movie&genres=drama&countries=kr&count=250");
-    const res = await fetchRes.json();
-
-    const results = res.results;
+    if (results.length == 0) {
+        const fetchRes = await fetch("https://imdb-api.com/API/AdvancedSearch/k_7k9vt2d6?release_date=2018-01-01,&genres=drama&countries=kr&count=1000000");
+        const res = await fetchRes.json();
+        results = res.results;
+    }
+    
     const index = Math.floor(Math.random() * results.length);
 
     return results[index];
